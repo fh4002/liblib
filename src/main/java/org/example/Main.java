@@ -1,17 +1,106 @@
 package org.example;
 
-//TIP 코드를 <b>실행</b>하려면 <shortcut actionId="Run"/>을(를) 누르거나
-// 에디터 여백에 있는 <icon src="AllIcons.Actions.Execute"/> 아이콘을 클릭하세요.
+import org.w3c.dom.ls.LSOutput;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+
 public class Main {
     static void main() {
-        //TIP 캐럿을 강조 표시된 텍스트에 놓고 <shortcut actionId="ShowIntentionActions"/>을(를) 누르면
-        // IntelliJ IDEA이(가) 수정을 제안하는 것을 확인할 수 있습니다.
-        IO.println(String.format("Hello and welcome!"));
+        bookCase bc = new bookCase();
+        bc.bookList();
+    }
+}
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP <shortcut actionId="Debug"/>을(를) 눌러 코드 디버그를 시작하세요. 1개의 <icon src="AllIcons.Debugger.Db_set_breakpoint"/> 중단점을 설정해 드렸습니다
-            // 언제든 <shortcut actionId="ToggleLineBreakpoint"/>을(를) 눌러 중단점을 더 추가할 수 있습니다.
-            IO.println("i = " + i);
+// 책 자체
+class Book {
+    String bookName;
+    String author;
+    int callNumber;
+
+    public Book (String bookname, String author, int callNumber){
+        this.bookName = bookname;
+        this.author = author;
+        this.callNumber = callNumber;
+    }
+}
+
+// 만화책
+class Comics extends Book {
+    boolean loanAvailable;
+
+    // (+) 같은 책이 여러 권 있는 것도 해 보기... (수량-1 하다가 if 수량 == 0, loanAvailable = false;)
+    public Comics(String bookName, String author, int callNumber, boolean loanAvailable) {
+        super(bookName, author, callNumber);
+        this.loanAvailable = loanAvailable;
+    }
+
+    @Override
+    public String toString() {
+        return bookName + "(" + callNumber + ")" + "-" + author;
+    }
+}
+
+// 일반 책
+class Novels extends Book {
+    boolean loanAvailable;
+
+    public Novels(String bookName, String author, int callNumber, boolean loanAvailable) {
+        super(bookName, author, callNumber);
+        this.loanAvailable = loanAvailable;
+    }
+
+    @Override
+    public String toString() {
+        return bookName + "(" + callNumber + ")" + "-" + author;
+    }
+}
+
+
+// 회원
+class Member {
+    String memberName;
+    String loanBook;
+    int phoneNumber;
+    LocalDate joinDate; // 가입일
+
+    public Member(String memberName, String loanBook, int phoneNumber, LocalDate joinDate){
+        this.memberName = memberName;
+        this.loanBook = loanBook;
+        this.phoneNumber = phoneNumber;
+        this.joinDate = joinDate;
+    }
+}
+
+
+// 도서 목록
+class bookCase {
+    ArrayList<Book> bookList = new ArrayList<>();
+
+    public void bookList() {
+        bookList.add(new Comics("Comics1", "Kim", 657, true));
+        bookList.add(new Comics("Comics2", "Lee", 657, true));
+
+        bookList.add(new Novels("Science", "Park", 400, true));
+        bookList.add(new Novels("K-Novel", "Choi", 816, true));
+        bookList.add(new Novels("UK-Novel", "Shin", 820, true));
+
+        System.out.println("##############");
+        for (int i = 0; i < bookList.size(); i++){
+            Book b = bookList.get(i);
+            System.out.println((i+1) + ". " + b.toString());
+
         }
+    }
+
+}
+
+// 회원 관리
+class memberManage extends Member{
+    // 연체도 만들어보기ㅡ...
+    public memberManage(String memberName, String loanBook, int phoneNumber, LocalDate joinDate) {
+        super(memberName, loanBook, phoneNumber, joinDate);
+
+        memberName
     }
 }
